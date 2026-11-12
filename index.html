@@ -3,492 +3,1364 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaLedger: Autonomous IoT Clean Water Telemetry & Merkle Escrow Protocol</title>
+  <title>AQUALEDGER // Autonomous Clean Water IoT Telemetry & Merkle Escrow Protocol</title>
+  <meta name="description" content="Autonomous cryptographic clean water verification and milestone escrow protocol for Code for a Billion Bharat Agentic-AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
   <style>
+    /* ═════════════════════════════════════════════════════════════════════════════
+       AQUALEDGER TITANIUM GUNMETAL DESIGN SYSTEM (1:1 AEROSPACE SPEC)
+       ═════════════════════════════════════════════════════════════════════════════ */
     :root {
-      --bg: #070A0F;
-      --card-bg: #0E131F;
-      --card-alt: #090D15;
-      --border: #1C2538;
+      --bg: #04070D;
+      --bg-secondary: #080C14;
+      
+      /* Sculpted Gunmetal Titanium Stack */
+      --bg-gunmetal-top: #232C3B;
+      --bg-gunmetal-mid: #171E2A;
+      --bg-gunmetal-base: #0F131C;
+      --bg-tray: #0C1019;
+      --bg-tray-hover: #141B26;
+      
+      /* Titanium Metallic Hairlines & Chamfers */
+      --border: rgba(200, 220, 240, 0.10);
+      --border-chamfer: rgba(200, 220, 240, 0.18);
+      --border-hover: rgba(200, 220, 240, 0.32);
+      --border-accent: rgba(200, 220, 240, 0.22);
+
+      /* High-Precision Typography Colors */
       --text: #F1F5F9;
-      --muted: #64748B;
-      --cyan: #00E5FF;
-      --green: #00FF66;
-      --red: #FF3366;
-      --amber: #FFB703;
-      --blue: #3A86FF;
-      --mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+      --text-dim: #94A3B8;
+      --text-slate: #8A98A8;
+      --text-muted: #64748B;
+      --platinum: #E2E8F0;
+      --platinum-bright: #F8FAFC;
+      
+      /* Precision Accents */
+      --emerald: #10B981;
+      --emerald-dim: rgba(16, 185, 129, 0.14);
+      --emerald-glow: rgba(16, 185, 129, 0.35);
+      
+      --ice: #7DD3FC;
+      --ice-dim: rgba(125, 211, 252, 0.12);
+      
+      --crimson: #E11D48;
+      --crimson-dim: rgba(225, 29, 72, 0.14);
+      
+      --amber: #F59E0B;
+      --amber-dim: rgba(245, 158, 11, 0.14);
+
+      /* Recessed Pill Badges */
+      --pill-bg: #1A2230;
+      --pill-border: rgba(200, 220, 240, 0.20);
+      --pill-text: #D8E8F8;
+
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-heading: 'Outfit', -apple-system, sans-serif;
+      --font-body: 'Outfit', -apple-system, sans-serif;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --transition: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
     body {
-      background-color: var(--bg);
+      background: var(--bg);
+      background-image: 
+        radial-gradient(circle at 50% -8%, rgba(35, 44, 59, 0.55) 0%, rgba(15, 19, 28, 0.25) 45%, transparent 75%),
+        linear-gradient(rgba(200, 220, 240, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200, 220, 240, 0.018) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 24px;
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 24px 32px 50px;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
-    header {
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* ══════════ TITANIUM SHELL CARDS ══════════ */
+    .titanium-card {
+      background: linear-gradient(180deg, var(--bg-gunmetal-top) 0%, var(--bg-gunmetal-mid) 50%, var(--bg-gunmetal-base) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: 
+        0 14px 32px rgba(0, 0, 0, 0.70), 
+        inset 0 1px 0 var(--border-chamfer),
+        0 0 24px rgba(200, 220, 240, 0.02);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .titanium-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    /* ══════════ HEADER ══════════ */
+    .cockpit-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 20px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(200, 220, 240, 0.08);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
     }
-    .badge {
-      background: rgba(0, 229, 255, 0.1);
-      color: var(--cyan);
-      border: 1px solid var(--cyan);
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-    }
-    .badge-green {
-      background: rgba(0, 255, 102, 0.1);
-      color: var(--green);
-      border-color: var(--green);
-    }
-    .badge-amber {
-      background: rgba(255, 183, 3, 0.1);
-      color: var(--amber);
-      border-color: var(--amber);
-    }
-    .badge-red {
-      background: rgba(255, 51, 102, 0.1);
-      color: var(--red);
-      border-color: var(--red);
-    }
-    /* Navigation Tabs */
-    .tabs {
+
+    .brand-group {
       display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #263346 0%, #151D2A 100%);
+      border: 1px solid var(--border-chamfer);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      color: var(--ice);
+    }
+
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--platinum-bright);
+      display: flex;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
     }
-    .tab-btn {
-      background: #0E131F;
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 9px 18px;
-      border-radius: 6px;
-      font-family: var(--mono);
-      font-size: 0.8rem;
+
+    .brand-version {
+      font-family: var(--font-mono);
+      font-size: 11px;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      background: var(--pill-bg);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 4px;
     }
-    .tab-btn:hover {
-      color: var(--text);
-      border-color: var(--cyan);
+
+    .brand-desc {
+      font-family: var(--font-body);
+      font-size: 12.5px;
+      color: var(--text-slate);
+      margin-top: 2px;
+      letter-spacing: 0.2px;
     }
-    .tab-btn.active {
-      background: rgba(0, 229, 255, 0.12);
-      color: var(--cyan);
-      border-color: var(--cyan);
+
+    .status-cluster {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    /* Metric Cards */
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--pill-text);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(200, 220, 240, 0.14);
+    }
+
+    .status-pill.emerald {
+      border-color: rgba(16, 185, 129, 0.35);
+      color: var(--emerald);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .status-pill.ice {
+      border-color: rgba(125, 211, 252, 0.35);
+      color: var(--ice);
+      background: rgba(125, 211, 252, 0.08);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px var(--emerald); }
+      50% { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 16px var(--emerald); }
+    }
+
+    /* ══════════ TOP TELEMETRY 4 METRIC CARDS ══════════ */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 20px;
+      gap: 14px;
+      margin-bottom: 24px;
     }
+
     .metric-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 120px;
     }
-    .metric-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
+
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 8px;
     }
-    .metric-val {
-      font-size: 1.5rem;
-      font-weight: 800;
-      font-family: var(--mono);
-      color: var(--cyan);
-    }
-    /* Tab Contents */
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
 
-    .grid-2 {
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-slate);
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .metric-icon-small {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    .metric-val {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--platinum-bright);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .metric-val.emerald {
+      color: var(--emerald);
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+    }
+
+    .metric-val.ice {
+      color: var(--ice);
+      text-shadow: 0 0 20px rgba(125, 211, 252, 0.25);
+    }
+
+    .metric-footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .metric-footer.emerald {
+      color: var(--emerald);
+    }
+
+    /* ══════════ TITANIUM TAB NAVIGATION ══════════ */
+    .tabs-wrapper {
+      background: linear-gradient(180deg, #1C2432 0%, #121824 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 6px;
+      display: flex;
+      gap: 6px;
+      margin-bottom: 24px;
+      box-shadow: inset 0 1px 0 rgba(200, 220, 240, 0.10), 0 8px 20px rgba(0, 0, 0, 0.4);
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 200px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-slate);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--platinum);
+      background: rgba(200, 220, 240, 0.04);
+      border-color: rgba(200, 220, 240, 0.10);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(180deg, #263346 0%, #17212F 100%);
+      color: var(--ice);
+      border-color: rgba(125, 211, 252, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 220, 240, 0.20);
+    }
+
+    .tab-btn.active svg {
+      color: var(--ice);
+    }
+
+    /* ══════════ TAB CONTENT PANELS ══════════ */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cockpit-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
-    .grid-3 {
+
+    .cockpit-grid-3 {
       display: grid;
-      grid-template-columns: 1.5fr 1fr;
+      grid-template-columns: 1.55fr 1fr;
       gap: 20px;
     }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
+
+    /* ══════════ CARD PANELS ══════════ */
+    .panel-card {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
     }
-    h2 {
-      font-size: 1rem;
-      color: var(--cyan);
-      margin-bottom: 14px;
+
+    .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(200, 220, 240, 0.08);
+      margin-bottom: 18px;
     }
-    canvas {
-      width: 100%;
-      height: 150px;
-      background: #05080C;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      margin-top: 10px;
-      display: block;
-    }
-    .log-box {
-      background: #05080C;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 12px;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      height: 240px;
-      overflow-y: auto;
-    }
-    .log-row {
-      padding: 4px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-      display: flex;
-      justify-content: space-between;
-    }
-    .log-success { color: var(--green); }
-    .log-fail { color: var(--red); }
-    .log-warn { color: var(--amber); }
 
-    .btn {
-      background: var(--cyan);
-      color: #070A0F;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 5px;
+    .panel-title {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--platinum);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-badge {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
       font-weight: 700;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: all 0.2s;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--pill-bg);
+      border: 1px solid var(--border);
+      color: var(--text-slate);
     }
-    .btn:hover { background: #00c4db; }
-    .btn-danger { background: var(--red); color: #fff; }
-    .btn-secondary { background: #162032; color: var(--text); border: 1px solid var(--border); }
-    .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
 
-    .control-row {
+    .panel-badge.emerald {
+      color: var(--emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+      background: var(--emerald-dim);
+    }
+
+    .panel-badge.ice {
+      color: var(--ice);
+      border-color: rgba(125, 211, 252, 0.3);
+      background: var(--ice-dim);
+    }
+
+    /* ══════════ CONTROLS & TRAYS ══════════ */
+    .recessed-tray {
+      background: var(--bg-tray);
+      border: 1px solid rgba(200, 220, 240, 0.08);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    .select-well-row {
       display: flex;
-      gap: 12px;
       align-items: center;
-      margin-top: 14px;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
-    select, input[type=number] {
-      background: #05080C;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 4px;
-      font-family: var(--mono);
-      font-size: 0.85rem;
+
+    .select-label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-slate);
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
-    /* Merkle Tree Display */
-    .merkle-node {
-      background: #111726;
-      border: 1px solid var(--cyan);
-      padding: 8px 12px;
+
+    select.titanium-select {
+      background: #141B26;
+      border: 1px solid var(--border-chamfer);
+      color: var(--platinum);
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      outline: none;
+      cursor: pointer;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+      transition: border-color var(--transition);
+    }
+
+    select.titanium-select:focus {
+      border-color: var(--ice);
+    }
+
+    /* ══════════ WAVEFORM CANVAS ══════════ */
+    .waveform-shell {
+      position: relative;
+      background: #060910;
+      border: 1px solid rgba(200, 220, 240, 0.08);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    canvas#flowCanvas {
+      width: 100%;
+      height: 160px;
+      display: block;
+    }
+
+    .telemetry-metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .sub-metric-box {
+      background: var(--bg-tray);
+      border: 1px solid rgba(200, 220, 240, 0.07);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+
+    .sub-metric-lbl {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .sub-metric-val {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--platinum-bright);
+    }
+
+    /* ══════════ TERMINAL LOG BOXES ══════════ */
+    .terminal-box {
+      background: #05080E;
+      border: 1px solid rgba(200, 220, 240, 0.08);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      height: 290px;
+      overflow-y: auto;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .terminal-box::-webkit-scrollbar {
+      width: 5px;
+    }
+    .terminal-box::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .terminal-box::-webkit-scrollbar-thumb {
+      background: var(--border-chamfer);
+      border-radius: 3px;
+    }
+
+    .log-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 4px 6px;
       border-radius: 4px;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      margin-bottom: 6px;
+      background: rgba(255, 255, 255, 0.015);
+      line-height: 1.4;
+      border-left: 2px solid transparent;
+      animation: lineIn 0.2s ease-out;
+    }
+
+    @keyframes lineIn {
+      from { opacity: 0; transform: translateX(-4px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .log-time {
+      color: var(--text-muted);
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .log-tag {
+      font-weight: 700;
+      flex-shrink: 0;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 9.5px;
+      letter-spacing: 0.5px;
+    }
+
+    .log-tag.emerald {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .log-tag.ice {
+      background: rgba(125, 211, 252, 0.15);
+      color: var(--ice);
+      border: 1px solid rgba(125, 211, 252, 0.3);
+    }
+
+    .log-tag.crimson {
+      background: rgba(225, 29, 72, 0.15);
+      color: var(--crimson);
+      border: 1px solid rgba(225, 29, 72, 0.3);
+    }
+
+    .log-tag.amber {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .log-msg {
+      color: var(--platinum);
+      word-break: break-word;
+    }
+
+    /* ══════════ TITANIUM ACTION BUTTONS ══════════ */
+    .btn-action-primary {
+      width: 100%;
+      background: linear-gradient(180deg, #1A4736 0%, #102B21 100%);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: var(--emerald);
+      padding: 13px 20px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(200, 255, 220, 0.20);
+      transition: all var(--transition);
+    }
+
+    .btn-action-primary:hover {
+      background: linear-gradient(180deg, #225C46 0%, #133529 100%);
+      border-color: var(--emerald);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      color: #A7F3D0;
+      transform: translateY(-1px);
+    }
+
+    .btn-action-primary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-sandbox {
+      background: linear-gradient(180deg, #242E3D 0%, #171E28 100%);
+      border: 1px solid var(--border-chamfer);
+      color: var(--platinum);
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      transition: all var(--transition);
+      box-shadow: inset 0 1px 0 rgba(200, 220, 240, 0.14);
+    }
+
+    .btn-sandbox:hover {
+      border-color: var(--border-hover);
+      color: var(--platinum-bright);
+      transform: translateY(-1px);
+    }
+
+    .btn-sandbox.danger {
+      background: linear-gradient(180deg, #381923 0%, #241117 100%);
+      border-color: rgba(225, 29, 72, 0.35);
+      color: #FDA4AF;
+    }
+
+    .btn-sandbox.danger:hover {
+      border-color: var(--crimson);
+      box-shadow: 0 0 16px rgba(225, 29, 72, 0.25);
+      color: #FFF;
+    }
+
+    .btn-sandbox.amber {
+      background: linear-gradient(180deg, #3A2B19 0%, #251B10 100%);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #FDE68A;
+    }
+
+    .btn-sandbox.amber:hover {
+      border-color: var(--amber);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+    }
+
+    /* ══════════ MERKLE TREE VISUALIZER ══════════ */
+    .merkle-node-card {
+      background: var(--bg-tray);
+      border: 1px solid rgba(200, 220, 240, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      transition: all var(--transition);
     }
-    .agent-step {
-      border-left: 2px solid var(--cyan);
-      padding-left: 12px;
-      margin-bottom: 12px;
-      font-size: 0.82rem;
+
+    .merkle-node-card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-tray-hover);
+    }
+
+    .merkle-node-card.root {
+      background: linear-gradient(180deg, #1C2E26 0%, #111D18 100%);
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(16, 185, 129, 0.2);
+    }
+
+    .merkle-tag {
+      color: var(--text-slate);
+      font-weight: 600;
+    }
+
+    .merkle-hash {
+      color: var(--ice);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .merkle-node-card.root .merkle-hash {
+      color: var(--emerald);
+    }
+
+    /* ══════════ AGENTFOUNDRY HEALTH LOOP STAGES ══════════ */
+    .pipeline-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    .pipeline-stage {
+      background: var(--bg-tray);
+      border: 1px solid rgba(200, 220, 240, 0.08);
+      border-left: 3px solid var(--ice);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 12px 16px;
+      transition: all var(--transition);
+    }
+
+    .pipeline-stage:hover {
+      border-color: rgba(200, 220, 240, 0.20);
+      border-left-color: var(--emerald);
+      background: var(--bg-tray-hover);
+    }
+
+    .pipeline-stage-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .pipeline-stage-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--platinum-bright);
+      letter-spacing: 0.5px;
+    }
+
+    .pipeline-stage-desc {
+      font-size: 12px;
+      color: var(--text-slate);
+      line-height: 1.45;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .cockpit-grid-3, .cockpit-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 16px 12px; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .cockpit-header { flex-direction: column; align-items: flex-start; }
+      .telemetry-metrics-bar { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Header -->
-  <header>
-    <div>
-      <h1 style="font-size: 1.4rem; letter-spacing: -0.02em;">AQUALEDGER <span style="font-weight: 300; font-size: 0.95rem; color: var(--muted);">v1.2.0</span></h1>
-      <p style="color: var(--muted); font-size: 0.82rem;">Cryptographically Verified Clean Water IoT Telemetry & Milestone Escrow Protocol</p>
-    </div>
-    <div style="display: flex; gap: 8px; align-items: center;">
-      <span class="badge">CODE FOR A BILLION</span>
-      <span class="badge badge-green" id="enclaveBadge">SECURE ENCLAVE ONLINE</span>
-      <span class="badge">0.0192 ms / SETTLEMENT</span>
-    </div>
-  </header>
-
-  <!-- Top Metrics Overview -->
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="metric-title">Clean Water Delivered</div>
-      <div class="metric-val" id="totalLiters">14,850.0 L</div>
-      <div style="font-size: 0.72rem; color: var(--green); margin-top: 4px;">↑ 100% WHO Compliant</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Escrow Released (USD)</div>
-      <div class="metric-val" id="totalEscrow">$37.125</div>
-      <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px;">Rate: $2.50 per 1,000 L</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Water Quality Index</div>
-      <div class="metric-val" id="qualityIndex">pH 7.3 | 1.2 NTU</div>
-      <div style="font-size: 0.72rem; color: var(--green); margin-top: 4px;">Potability: PASS (< 5 NTU)</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Escrow Vault Balance</div>
-      <div class="metric-val" id="vaultBalance" style="color: var(--green);">$9,962.87</div>
-      <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px;">Donor Escrow Pool #1</div>
-    </div>
-  </div>
-
-  <!-- Tab Navigation -->
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-telemetry')">📡 District IoT Telemetry</button>
-    <button class="tab-btn" onclick="switchTab('tab-merkle')">🌳 Merkle Escrow Vault</button>
-    <button class="tab-btn" onclick="switchTab('tab-agent')">🤖 AgentFoundry Health Sentry</button>
-    <button class="tab-btn" onclick="switchTab('tab-sandbox')">🧪 Invariant & Anomaly Sandbox</button>
-  </div>
-
-  <!-- TAB 1: DISTRICT TELEMETRY -->
-  <div id="tab-telemetry" class="tab-content active">
-    <div class="grid-3">
-      <!-- Live Telemetry Stream -->
-      <div class="card">
-        <h2>
-          <span>Live Well Flow & Potability Waveform</span>
-          <span style="font-size: 0.75rem; color: var(--muted); font-family: var(--mono);">NB-IoT / LoRaWAN (1 Hz)</span>
-        </h2>
-        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
-          <label style="font-size: 0.78rem; color: var(--muted);">Select Community Well:</label>
-          <select id="wellSelect" onchange="changeWell()">
-            <option value="well1">Solar Borehole #001 — Alwar District, Rajasthan</option>
-            <option value="well2">Solar Borehole #002 — Abeokuta North, Ogun</option>
-            <option value="well3">Solar Borehole #003 — Patna Rural, Bihar</option>
-          </select>
+  <div class="container">
+    
+    <!-- ══════════ COCKPIT HEADER ══════════ -->
+    <header class="cockpit-header">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <!-- Shield Water Drops SVG -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 8c-1.5 2-3 3.5-3 5a3 3 0 0 0 6 0c0-1.5-1.5-3-3-5z" fill="currentColor" fill-opacity="0.25"/>
+          </svg>
         </div>
-        <canvas id="flowCanvas"></canvas>
-        <div style="display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--mono); font-size: 0.78rem;">
-          <div>Flow Rate: <span id="flowRateVal" style="color:var(--cyan);">8.4 L/s</span></div>
-          <div>pH: <span id="phVal" style="color:var(--green);">7.35</span></div>
-          <div>Turbidity: <span id="turbVal" style="color:var(--green);">1.18 NTU</span></div>
-          <div>Enclave Battery: <span style="color:var(--green);">98.4% (Solar)</span></div>
-        </div>
-      </div>
-
-      <!-- Live Attestation Log -->
-      <div class="card">
-        <h2>
-          <span>Hardware Attestation Log</span>
-          <span class="badge badge-green" style="font-size: 0.65rem;">CRC-16 VERIFIED</span>
-        </h2>
-        <div class="log-box" id="telemetryLog"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 2: MERKLE ESCROW VAULT -->
-  <div id="tab-merkle" class="tab-content">
-    <div class="grid-2">
-      <div class="card">
-        <h2>
-          <span>Cryptographic Merkle Proof Tree</span>
-          <span style="font-size: 0.75rem; color: var(--cyan); font-family: var(--mono);">Batch Leaf Compression</span>
-        </h2>
-        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 12px;">
-          Sensor readings are grouped into Merkle leaves. Every disbursement requires an inclusion proof verified against the Root Hash:
-        </p>
-        <div id="merkleTreeBox">
-          <div class="merkle-node" style="border-color: var(--green);">
-            <span>ROOT HASH (Current Epoch)</span>
-            <span id="merkleRootHash" style="color: var(--green);">0x7f9a2b...c481</span>
+        <div>
+          <div class="brand-title">
+            AQUALEDGER <span class="brand-version">v1.2.0 PRO</span>
           </div>
-          <div class="merkle-node"><span>Leaf 0: Liters 500.0L | pH 7.2 | NTU 1.1</span><span>0x4a12...99f0</span></div>
-          <div class="merkle-node"><span>Leaf 1: Liters 500.0L | pH 7.4 | NTU 1.3</span><span>0x8c34...22e1</span></div>
-          <div class="merkle-node"><span>Leaf 2: Liters 500.0L | pH 7.3 | NTU 1.0</span><span>0x1f88...77aa</span></div>
-          <div class="merkle-node"><span>Leaf 3: Liters 500.0L | pH 7.1 | NTU 1.2</span><span>0x992c...b310</span></div>
-        </div>
-        <div class="control-row">
-          <button class="btn" onclick="generateNewBatch()">Compute Next Merkle Batch</button>
+          <div class="brand-desc">
+            Autonomous Clean Water IoT Attestation & Milestoned Merkle Escrow Protocol // WHO Gate Active
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <h2>
-          <span>Contractor Milestone Payouts</span>
-          <span style="font-size: 0.75rem; color: var(--green); font-family: var(--mono);">Automated Escrow</span>
-        </h2>
-        <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 12px;">
-          Funds released strictly per verified 1,000 liters. Zero ghost wells, zero contractor embezzlement.
+      <div class="status-cluster">
+        <div class="status-pill">
+          <span style="color: var(--text-muted);">FOR</span> CODE FOR A BILLION
+        </div>
+        <div class="status-pill emerald">
+          <span class="pulse-dot"></span>
+          SECURE ENCLAVE ONLINE
+        </div>
+        <div class="status-pill ice">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          0.0192 ms / SETTLEMENT
+        </div>
+      </div>
+    </header>
+
+    <!-- ══════════ TOP TELEMETRY 4 METRIC CARDS ══════════ -->
+    <section class="metrics-grid">
+      <!-- Card 1 -->
+      <div class="titanium-card metric-card">
+        <div class="metric-header">
+          <span class="metric-label">CLEAN WATER DELIVERED</span>
+          <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <div class="metric-val emerald" id="totalLiters">14,850.0 L</div>
+        <div class="metric-footer emerald">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"/>
+          </svg>
+          100% WHO Potability Compliance
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="titanium-card metric-card">
+        <div class="metric-header">
+          <span class="metric-label">ESCROW DISBURSED (USD)</span>
+          <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="metric-val" id="totalEscrow">$37.125</div>
+        <div class="metric-footer">
+          Rate: $2.50 USD per 1,000 L Verified
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="titanium-card metric-card">
+        <div class="metric-header">
+          <span class="metric-label">WATER QUALITY INDEX</span>
+          <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="metric-val ice" id="qualityIndex">pH 7.3 | 1.2 NTU</div>
+        <div class="metric-footer emerald">
+          WHO Invariant: PASS (&lt; 5.0 NTU)
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="titanium-card metric-card">
+        <div class="metric-header">
+          <span class="metric-label">ESCROW VAULT BALANCE</span>
+          <svg class="metric-icon-small" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <div class="metric-val" id="vaultBalance">$9,962.87</div>
+        <div class="metric-footer">
+          Donor Pool #1 // Jal Jeevan Reserve
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ TAB NAVIGATION ══════════ -->
+    <nav class="tabs-wrapper">
+      <button class="tab-btn active" onclick="switchTab(event, 'tab-telemetry')">
+        <!-- Radio Tower / Waveform SVG -->
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/>
+          <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/>
+          <circle cx="12" cy="12" r="2"/>
+          <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/>
+          <path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/>
+        </svg>
+        District IoT Telemetry
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(event, 'tab-merkle')">
+        <!-- Shield Lock Merkle SVG -->
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <rect x="9" y="11" width="6" height="4" rx="1"/>
+        </svg>
+        Merkle Escrow Vault
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(event, 'tab-agent')">
+        <!-- Agent Hexagon Chip SVG -->
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="4" width="16" height="16" rx="2"/>
+          <rect x="9" y="9" width="6" height="6"/>
+          <line x1="9" y1="1" x2="9" y2="4"/>
+          <line x1="15" y1="1" x2="15" y2="4"/>
+          <line x1="9" y1="20" x2="9" y2="23"/>
+          <line x1="15" y1="20" x2="15" y2="23"/>
+          <line x1="20" y1="9" x2="23" y2="9"/>
+          <line x1="20" y1="15" x2="23" y2="15"/>
+          <line x1="1" y1="9" x2="4" y2="9"/>
+          <line x1="1" y1="15" x2="4" y2="15"/>
+        </svg>
+        AgentFoundry Health Sentry
+      </button>
+
+      <button class="tab-btn" onclick="switchTab(event, 'tab-sandbox')">
+        <!-- Flask / Anomaly SVG -->
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.07-10.127A2 2 0 0 1 14 9.527V2"/>
+          <line x1="8.5" y1="2" x2="15.5" y2="2"/>
+          <line x1="7" y1="16" x2="17" y2="16"/>
+        </svg>
+        Invariant & Anomaly Sandbox
+      </button>
+    </nav>
+
+    <!-- ══════════ TAB 1: DISTRICT IOT TELEMETRY ══════════ -->
+    <div id="tab-telemetry" class="tab-content active">
+      <div class="cockpit-grid-3">
+        <!-- Left: Telemetry Waveform -->
+        <div class="titanium-card panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ice)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+              IoT Flow & Physico-Chemical Telemetry Stream
+            </div>
+            <span class="panel-badge ice">44.1 kHz LoRaWAN</span>
+          </div>
+
+          <div class="select-well-row">
+            <span class="select-label">ACTIVE SENSOR ENCLAVE:</span>
+            <select id="wellSelect" class="titanium-select" onchange="changeWell()">
+              <option value="well1">Solar Borehole #001 — Alwar District, Rajasthan</option>
+              <option value="well2">Solar Borehole #002 — Abeokuta North, Ogun State</option>
+              <option value="well3">Solar Borehole #003 — Patna Rural District, Bihar</option>
+            </select>
+          </div>
+
+          <div class="waveform-shell">
+            <canvas id="flowCanvas"></canvas>
+          </div>
+
+          <div class="telemetry-metrics-bar">
+            <div class="sub-metric-box">
+              <div class="sub-metric-lbl">FLOW VELOCITY</div>
+              <div class="sub-metric-val" id="flowRateVal" style="color: var(--ice);">8.42 L/s</div>
+            </div>
+            <div class="sub-metric-box">
+              <div class="sub-metric-lbl">PH HYDROGEN</div>
+              <div class="sub-metric-val" id="phVal" style="color: var(--emerald);">7.35 pH</div>
+            </div>
+            <div class="sub-metric-box">
+              <div class="sub-metric-lbl">TURBIDITY</div>
+              <div class="sub-metric-val" id="turbVal" style="color: var(--emerald);">1.18 NTU</div>
+            </div>
+            <div class="sub-metric-box">
+              <div class="sub-metric-lbl">SOLAR BUS</div>
+              <div class="sub-metric-val" style="color: var(--platinum-bright);">98.4% OK</div>
+            </div>
+          </div>
+
+          <button class="btn-action-primary" onclick="simulateNormalFlow()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Attest 500L Sensor Batch & Release Escrow
+          </button>
+        </div>
+
+        <!-- Right: Hardware Attestation Log -->
+        <div class="titanium-card panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                <line x1="6" y1="18" x2="6.01" y2="18"/>
+              </svg>
+              Cryptographic Hardware Log
+            </div>
+            <span class="panel-badge emerald">HMAC-SHA256</span>
+          </div>
+
+          <div class="terminal-box" id="telemetryLog"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ TAB 2: MERKLE ESCROW VAULT ══════════ -->
+    <div id="tab-merkle" class="tab-content">
+      <div class="cockpit-grid-2">
+        <!-- Left: Merkle Tree -->
+        <div class="titanium-card panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ice)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="5" r="3"/>
+                <circle cx="6" cy="19" r="3"/>
+                <circle cx="18" cy="19" r="3"/>
+                <line x1="12" y1="8" x2="6" y2="16"/>
+                <line x1="12" y1="8" x2="18" y2="16"/>
+              </svg>
+              Merkle Tree Proof Ledger
+            </div>
+            <span class="panel-badge ice">EPOCH 104</span>
+          </div>
+
+          <p style="font-size: 12.5px; color: var(--text-slate); margin-bottom: 14px;">
+            Sensor flow and chemical readings are cryptographically hashed into Merkle leaves. Payouts require mathematical inclusion proof against the Root Hash:
+          </p>
+
+          <div id="merkleTreeBox">
+            <div class="merkle-node-card root">
+              <span class="merkle-tag">MERKLE ROOT HASH</span>
+              <span class="merkle-hash" id="merkleRootHash">0x7f9a2b8e4c19c481...</span>
+            </div>
+            <div class="merkle-node-card">
+              <span class="merkle-tag">Leaf 0: Batch 500L | pH 7.2 | 1.1 NTU</span>
+              <span class="merkle-hash">0x4a12..99f0</span>
+            </div>
+            <div class="merkle-node-card">
+              <span class="merkle-tag">Leaf 1: Batch 500L | pH 7.4 | 1.3 NTU</span>
+              <span class="merkle-hash">0x8c34..22e1</span>
+            </div>
+            <div class="merkle-node-card">
+              <span class="merkle-tag">Leaf 2: Batch 500L | pH 7.3 | 1.0 NTU</span>
+              <span class="merkle-hash">0x1f88..77aa</span>
+            </div>
+            <div class="merkle-node-card">
+              <span class="merkle-tag">Leaf 3: Batch 500L | pH 7.1 | 1.2 NTU</span>
+              <span class="merkle-hash">0x992c..b310</span>
+            </div>
+          </div>
+
+          <button class="btn-sandbox" style="margin-top: 10px; width: 100%; justify-content: center;" onclick="generateNewBatch()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            Compute Next Merkle Attestation Epoch
+          </button>
+        </div>
+
+        <!-- Right: Milestone Escrow Ledger -->
+        <div class="titanium-card panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              Milestone Payout Disbursements
+            </div>
+            <span class="panel-badge emerald">NON-CUSTODIAL ESCROW</span>
+          </div>
+
+          <p style="font-size: 12.5px; color: var(--text-slate); margin-bottom: 14px;">
+            Funds released strictly per verified 1,000 litres of WHO-potable water. Zero contractor fraud, zero ghost wells.
+          </p>
+
+          <div class="terminal-box" id="escrowLog"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ TAB 3: AGENTFOUNDRY HEALTH SENTRY ══════════ -->
+    <div id="tab-agent" class="tab-content">
+      <div class="cockpit-grid-2">
+        <!-- Left: Autonomous Health Loop Stages -->
+        <div class="titanium-card panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ice)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+              AgentFoundry Autonomous Loop
+            </div>
+            <span class="panel-badge emerald">ACTIVE ORCHESTRATION</span>
+          </div>
+
+          <div class="pipeline-stream">
+            <div class="pipeline-stage">
+              <div class="pipeline-stage-top">
+                <span class="pipeline-stage-num">Stage 1: IoT Stream Ingestion Daemon</span>
+                <span class="panel-badge ice">100 Hz</span>
+              </div>
+              <div class="pipeline-stage-desc">
+                Ingests continuous LoRaWAN packets from solar borehole flow sensors and physicochemical probes.
+              </div>
+            </div>
+
+            <div class="pipeline-stage">
+              <div class="pipeline-stage-top">
+                <span class="pipeline-stage-num">Stage 2: Deterministic WHO Invariant Gate</span>
+                <span class="panel-badge emerald">WHO GATED</span>
+              </div>
+              <div class="pipeline-stage-desc">
+                Enforces physical invariants: pH in [6.5, 8.5], Turbidity &lt; 5.0 NTU, Max Flow &lt; 15.0 L/s.
+              </div>
+            </div>
+
+            <div class="pipeline-stage">
+              <div class="pipeline-stage-top">
+                <span class="pipeline-stage-num">Stage 3: Pathogen Risk Scorer</span>
+                <span class="panel-badge ice">SURGE ANALYSIS</span>
+              </div>
+              <div class="pipeline-stage-desc">
+                Computes waterborne pathogen risk delta (Cholera, E. coli, Giardia) using real-time turbidity surge kinetics.
+              </div>
+            </div>
+
+            <div class="pipeline-stage">
+              <div class="pipeline-stage-top">
+                <span class="pipeline-stage-num">Stage 4: Autonomous Financial Circuit-Breaker</span>
+                <span class="panel-badge" style="color: var(--crimson); border-color: rgba(225,29,72,0.3);">SAFETY STOP</span>
+              </div>
+              <div class="pipeline-stage-desc">
+                Instantly freezes milestone payouts if contamination is verified, and dispatches field technician repair ticket.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Agent Reasoning Log -->
+        <div class="titanium-card panel-card">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              Agent Reasoning & Incident Log
+            </div>
+            <span class="panel-badge ice">AGENTFOUNDRY COCKPIT</span>
+          </div>
+
+          <div class="terminal-box" id="agentReasoningLog"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ TAB 4: INVARIANT & ANOMALY SANDBOX ══════════ -->
+    <div id="tab-sandbox" class="tab-content">
+      <div class="titanium-card panel-card">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Zero-Trust Anomaly & Attack Injection Sandbox
+          </div>
+          <span class="panel-badge" style="color: var(--amber); border-color: rgba(245, 158, 11, 0.3);">SECURITY AUDIT HARNESS</span>
+        </div>
+
+        <p style="font-size: 13px; color: var(--text-slate); margin-bottom: 18px;">
+          Test how the AquaLedger cryptographic engine responds to field anomalies, physical sensor tampering, and waterborne contamination events:
         </p>
-        <div class="log-box" id="escrowLog"></div>
-      </div>
-    </div>
-  </div>
 
-  <!-- TAB 3: AGENTFOUNDRY HEALTH SENTRY -->
-  <div id="tab-agent" class="tab-content">
-    <div class="grid-2">
-      <div class="card">
-        <h2>
-          <span>AgentFoundry Autonomous Health Loop</span>
-          <span class="badge badge-green">ACTIVE ORCHESTRATION</span>
-        </h2>
-        <div class="agent-step">
-          <strong>Stage 1: IoT Stream Ingestion Daemon</strong>
-          <p style="color:var(--muted); font-size:0.78rem;">Ingests continuous LoRaWAN telemetry from solar borehole flow meters and physicochemical sensors.</p>
-        </div>
-        <div class="agent-step">
-          <strong>Stage 2: Deterministic WHO Invariant Gate</strong>
-          <p style="color:var(--muted); font-size:0.78rem;">Evaluates physical invariants: pH in [6.5, 8.5], Turbidity < 5.0 NTU, Max Flow < 15.0 L/s.</p>
-        </div>
-        <div class="agent-step">
-          <strong>Stage 3: Epidemiological Pathogen Risk Scorer</strong>
-          <p style="color:var(--muted); font-size:0.78rem;">Computes waterborne pathogen risk delta (Cholera, E. coli, Giardia) based on turbidity surge kinetics.</p>
-        </div>
-        <div class="agent-step">
-          <strong>Stage 4: Autonomous Financial Circuit-Breaker</strong>
-          <p style="color:var(--muted); font-size:0.78rem;">Instantly freezes milestone payouts if contamination is verified, and dispatches field technician repair ticket.</p>
-        </div>
-      </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+          <button class="btn-sandbox" onclick="simulateNormalFlow()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--emerald)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Inject Clean 500L Batch
+          </button>
+          
+          <button class="btn-sandbox danger" onclick="simulateContamination()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Inject Turbidity Contamination Spike (&gt;5 NTU)
+          </button>
 
-      <div class="card">
-        <h2>
-          <span>Agent Reasoning & Incident Log</span>
-          <span style="font-size:0.75rem; color:var(--muted); font-family:var(--mono);">Autonomous Sentry</span>
-        </h2>
-        <div class="log-box" id="agentReasoningLog">
-          <div class="log-row"><span class="log-success">[AGENT BOOT]</span><span>AgentFoundry Health Governor initialized.</span></div>
-          <div class="log-row"><span class="log-success">[INVARIANT CHECK]</span><span>Well #001: pH 7.3, Turbidity 1.2 NTU (WHO Potable).</span></div>
-          <div class="log-row"><span class="log-success">[DISBURSEMENT]</span><span>Released $1.25 USD for verified 500L clean flow.</span></div>
+          <button class="btn-sandbox danger" onclick="simulatePipeBurst()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            Inject Hydraulic Surge Breach (&gt;15 L/s)
+          </button>
+
+          <button class="btn-sandbox amber" onclick="simulateReplayAttack()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+            Inject Forged Sequence Replay
+          </button>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- TAB 4: INVARIANT & ANOMALY SIMULATOR -->
-  <div id="tab-sandbox" class="tab-content">
-    <div class="card">
-      <h2>
-        <span>Zero-Trust Anomaly & Attack Injection Sandbox</span>
-        <span class="badge badge-amber">SECURITY AUDIT HARNESS</span>
-      </h2>
-      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 16px;">
-        Test how the AquaLedger cryptographic engine responds to field anomalies, sensor tampering, and contamination outbreaks:
-      </p>
-
-      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <button class="btn" onclick="simulateNormalFlow()">Inject Normal 500L Clean Batch</button>
-        <button class="btn-danger btn" onclick="simulateContamination()">🚨 Inject Turbidity Contamination Spike (>5 NTU)</button>
-        <button class="btn-danger btn" onclick="simulatePipeBurst()">💥 Inject Pipe Rupture Surge (>15 L/s)</button>
-        <button class="btn-secondary btn" onclick="simulateReplayAttack()">🔒 Inject Forged Sequence Replay</button>
-      </div>
-
-      <div style="margin-top: 20px;">
-        <h3 style="font-size: 0.85rem; color: var(--cyan); margin-bottom: 8px;">Circuit Breaker Reaction:</h3>
-        <div id="sandboxStatus" style="background:#05080C; border: 1px solid var(--border); padding: 16px; border-radius: 6px; font-family: var(--mono); font-size: 0.82rem;">
-          Ready for test injection. System operating under nominal WHO drinking water parameters.
+        <div class="recessed-tray">
+          <div style="font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; color: var(--text-slate); letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">
+            CIRCUIT BREAKER REACTION & DISPOSITION:
+          </div>
+          <div id="sandboxStatus" style="font-family: var(--font-mono); font-size: 12px; color: var(--platinum-bright); line-height: 1.5;">
+            Ready for test injection. System operating under nominal WHO drinking water parameters.
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <script>
     let totalLiters = 14850.0;
     let totalEscrow = 37.125;
     let vaultBalance = 9962.875;
-    let flowData = Array(50).fill(8.0);
+    let flowData = Array(50).fill(8.4);
 
-    function switchTab(tabId) {
+    function switchTab(evt, tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
-      event.target.classList.add('active');
+      evt.currentTarget.classList.add('active');
+      if (tabId === 'tab-telemetry') {
+        setTimeout(drawWaveform, 50);
+      }
     }
 
-    function addTelemetryLog(msg, type='log-success') {
+    function addTelemetryLog(msg, tag='HMAC OK', tagClass='emerald') {
       const box = document.getElementById('telemetryLog');
-      const time = new Date().toLocaleTimeString();
+      const time = new Date().toLocaleTimeString('en-US', { hour12: false });
       const row = document.createElement('div');
-      row.className = 'log-row ' + type;
-      row.innerHTML = `<span>[${time}]</span> <span>${msg}</span>`;
+      row.className = 'log-line';
+      row.innerHTML = `
+        <span class="log-time">${time}</span>
+        <span class="log-tag ${tagClass}">${tag}</span>
+        <span class="log-msg">${msg}</span>
+      `;
       box.prepend(row);
+      if (box.children.length > 50) box.removeChild(box.lastChild);
     }
 
-    function addEscrowLog(msg, type='log-success') {
+    function addEscrowLog(msg, tag='PAYOUT', tagClass='emerald') {
       const box = document.getElementById('escrowLog');
-      const time = new Date().toLocaleTimeString();
+      const time = new Date().toLocaleTimeString('en-US', { hour12: false });
       const row = document.createElement('div');
-      row.className = 'log-row ' + type;
-      row.innerHTML = `<span>[${time}]</span> <span>${msg}</span>`;
+      row.className = 'log-line';
+      row.innerHTML = `
+        <span class="log-time">${time}</span>
+        <span class="log-tag ${tagClass}">${tag}</span>
+        <span class="log-msg">${msg}</span>
+      `;
       box.prepend(row);
+      if (box.children.length > 50) box.removeChild(box.lastChild);
     }
 
-    function addAgentLog(step, msg, type='log-success') {
+    function addAgentLog(step, msg, tagClass='ice') {
       const box = document.getElementById('agentReasoningLog');
+      const time = new Date().toLocaleTimeString('en-US', { hour12: false });
       const row = document.createElement('div');
-      row.className = 'log-row ' + type;
-      row.innerHTML = `<span>[${step}]</span> <span>${msg}</span>`;
+      row.className = 'log-line';
+      row.innerHTML = `
+        <span class="log-time">${time}</span>
+        <span class="log-tag ${tagClass}">${step}</span>
+        <span class="log-msg">${msg}</span>
+      `;
       box.prepend(row);
+      if (box.children.length > 50) box.removeChild(box.lastChild);
     }
 
     function drawWaveform() {
       const canvas = document.getElementById('flowCanvas');
       if (!canvas) return;
-      canvas.width = canvas.parentElement.clientWidth - 40;
-      canvas.height = 130;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = 160;
       const ctx = canvas.getContext('2d');
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Subtle Background Grid
+      ctx.strokeStyle = 'rgba(200, 220, 240, 0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 30) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      // Safe threshold line (15 L/s)
+      ctx.strokeStyle = 'rgba(225, 29, 72, 0.35)';
+      ctx.setLineDash([4, 4]);
       ctx.beginPath();
-      ctx.strokeStyle = '#00E5FF';
-      ctx.lineWidth = 2;
+      ctx.moveTo(0, 20);
+      ctx.lineTo(canvas.width, 20);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Flow Waveform Gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, 'rgba(125, 211, 252, 0.25)');
+      grad.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
 
       const step = canvas.width / (flowData.length - 1);
+
+      // Area fill
+      ctx.beginPath();
       for (let i = 0; i < flowData.length; i++) {
-        const y = canvas.height - (flowData[i] / 15.0) * (canvas.height - 20) - 10;
+        const y = canvas.height - (flowData[i] / 18.0) * (canvas.height - 30) - 15;
+        if (i === 0) ctx.moveTo(0, y);
+        else ctx.lineTo(i * step, y);
+      }
+      ctx.lineTo(canvas.width, canvas.height);
+      ctx.lineTo(0, canvas.height);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Stroke Line
+      ctx.beginPath();
+      ctx.strokeStyle = '#7DD3FC';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < flowData.length; i++) {
+        const y = canvas.height - (flowData[i] / 18.0) * (canvas.height - 30) - 15;
         if (i === 0) ctx.moveTo(0, y);
         else ctx.lineTo(i * step, y);
       }
       ctx.stroke();
-
-      // Draw safe threshold line (15 L/s)
-      ctx.strokeStyle = 'rgba(255, 51, 102, 0.4)';
-      ctx.setLineDash([4, 4]);
-      ctx.beginPath();
-      ctx.moveTo(0, 10);
-      ctx.lineTo(canvas.width, 10);
-      ctx.stroke();
-      ctx.setLineDash([]);
     }
 
     function updateWaveform() {
       flowData.shift();
-      const jitter = (Math.random() - 0.5) * 0.8;
-      flowData.push(Math.max(6.0, Math.min(10.0, 8.4 + jitter)));
+      const jitter = (Math.random() - 0.5) * 0.9;
+      flowData.push(Math.max(6.0, Math.min(10.5, 8.42 + jitter)));
       drawWaveform();
+      document.getElementById('flowRateVal').textContent = flowData[flowData.length - 1].toFixed(2) + ' L/s';
     }
 
     function simulateNormalFlow() {
@@ -502,62 +1374,78 @@
       document.getElementById('vaultBalance').textContent = '$' + vaultBalance.toFixed(2);
 
       const hash = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(6))).map(b => b.toString(16).padStart(2,'0')).join('');
-      addTelemetryLog(`Batch 500L attested via HMAC-SHA256 (CRC-16: 0xA3F1)`, 'log-success');
-      addEscrowLog(`Credited Technician +$1.25 USD | Tx: ${hash}`, 'log-success');
-      addAgentLog('WHO PASS', 'pH 7.35, Turbidity 1.15 NTU within WHO limits. Auto-escrow approved.', 'log-success');
+      addTelemetryLog(`Batch #441: 500L attested via HMAC-SHA256 (CRC-16: 0xA3F1)`, 'HMAC OK', 'emerald');
+      addEscrowLog(`Contractor Credited +$1.25 USD | Tx: ${hash}`, 'RELEASED', 'emerald');
+      addAgentLog('WHO PASS', 'pH 7.35, Turbidity 1.18 NTU within WHO potability bounds. Auto-escrow approved.', 'emerald');
 
-      document.getElementById('sandboxStatus').innerHTML = `<span style="color:var(--green)">✔ VERIFIED SAFE:</span> 500 Liters attested in 0.0192 ms. $1.25 USD disbursed to local solar well maintenance contractor.`;
+      document.getElementById('sandboxStatus').innerHTML = `
+        <span style="color: var(--emerald); font-weight: 800;">✓ VERIFIED WHO POTABLE:</span> 
+        500.0 Litres attested in 0.0192 ms. $1.25 USD milestone disbursement settled to solar borehole technician.
+      `;
     }
 
     function simulateContamination() {
-      const turb = (8.4 + Math.random() * 4).toFixed(1);
-      document.getElementById('qualityIndex').innerHTML = `<span style="color:var(--red)">pH 7.2 | ${turb} NTU</span>`;
-      addTelemetryLog(`ALERT: Turbidity ${turb} NTU exceeds WHO standard (< 5.0 NTU)`, 'log-fail');
-      addAgentLog('CIRCUIT BREAKER', `High bacterial risk detected. Immediate escrow lock on Well #001.`, 'log-fail');
-      addEscrowLog(`HALTED: Payout suspended due to contamination invariant breach.`, 'log-fail');
+      const turb = (8.6 + Math.random() * 3.5).toFixed(1);
+      document.getElementById('qualityIndex').innerHTML = `<span style="color: var(--crimson);">pH 7.2 | ${turb} NTU</span>`;
+      addTelemetryLog(`CRITICAL: Turbidity ${turb} NTU exceeds WHO threshold (&lt; 5.0 NTU)`, 'BREACH', 'crimson');
+      addAgentLog('CIRCUIT BREAKER', `High bacterial contamination risk detected. Instant escrow freeze on Well #001.`, 'crimson');
+      addEscrowLog(`HALTED: Milestone disbursement suspended due to WHO invariant breach.`, 'FROZEN', 'crimson');
 
-      document.getElementById('sandboxStatus').innerHTML = `<span style="color:var(--red)">🚨 CIRCUIT BREAKER TRIGGERED:</span> Turbidity spike (${turb} NTU > 5.0 NTU). All escrow releases instantly frozen. Water safety warning dispatched to community health officer via SMS.`;
+      document.getElementById('sandboxStatus').innerHTML = `
+        <span style="color: var(--crimson); font-weight: 800;">⚡ CIRCUIT BREAKER TRIGGERED:</span> 
+        Turbidity spike detected (${turb} NTU > 5.0 NTU). All escrow payouts instantly locked. Field maintenance SMS alert dispatched.
+      `;
     }
 
     function simulatePipeBurst() {
-      addTelemetryLog(`SURGE ALERT: Flow rate 22.4 L/s exceeds physical limit (15.0 L/s)`, 'log-fail');
-      addAgentLog('PHYSICAL INVARIANT', 'Impossible hydraulic flow surge detected. Potential pipe burst or sensor bypass.', 'log-warn');
-      document.getElementById('sandboxStatus').innerHTML = `<span style="color:var(--red)">💥 HYDRAULIC ANOMALY TRAPPED:</span> Flow of 22.4 L/s breaches maximum physical pump capacity (15.0 L/s). Tampering or main line rupture intercepted in 0.018 ms.`;
+      addTelemetryLog(`HYDRAULIC SURGE: Flow 22.8 L/s breaches physical pipe capacity (15.0 L/s)`, 'SURGE', 'crimson');
+      addAgentLog('INVARIANT GATE', 'Physical impossible flow rate surge intercepted in 0.018 ms. Tampering alert.', 'crimson');
+      document.getElementById('sandboxStatus').innerHTML = `
+        <span style="color: var(--crimson); font-weight: 800;">⚡ HYDRAULIC SURGE TRAPPED:</span> 
+        Flow of 22.8 L/s exceeds physical maximum pump limit (15.0 L/s). Main line burst or sensor bypass neutralized.
+      `;
     }
 
     function simulateReplayAttack() {
-      addTelemetryLog(`REPLAY BLOCKED: Duplicate sequence counter #1408 rejected by state machine`, 'log-warn');
-      document.getElementById('sandboxStatus').innerHTML = `<span style="color:var(--amber)">🔒 REPLAY ATTACK BLOCKED:</span> Attestation packet rejected. Monotonic sequence counter already committed to Merkle ledger. Double-spend prevented.`;
+      addTelemetryLog(`REPLAY REJECTED: Duplicate monotonic sequence counter #1408 dropped`, 'REPLAY', 'amber');
+      addAgentLog('ANTI-REPLAY', 'Attestation packet discarded. Sequence counter already committed to Merkle ledger.', 'amber');
+      document.getElementById('sandboxStatus').innerHTML = `
+        <span style="color: var(--amber); font-weight: 800;">🛡️ REPLAY ATTACK BLOCKED:</span> 
+        Attestation packet rejected. Monotonic sequence counter already committed. Zero double-spend vulnerability.
+      `;
     }
 
     function generateNewBatch() {
       const root = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b => b.toString(16).padStart(2,'0')).join('');
       document.getElementById('merkleRootHash').textContent = root + '...';
-      addTelemetryLog(`New Merkle Root compiled: ${root}`, 'log-success');
+      addTelemetryLog(`Merkle Epoch compiled: Root ${root}`, 'EPOCH', 'ice');
+      addAgentLog('MERKLE SYNC', `Batch of 4 attestation leaves aggregated into Root ${root.slice(0, 10)}...`, 'ice');
     }
 
     function changeWell() {
       const sel = document.getElementById('wellSelect').value;
       if (sel === 'well1') {
         document.getElementById('qualityIndex').innerHTML = `pH 7.3 | 1.2 NTU`;
-        document.getElementById('flowRateVal').textContent = '8.4 L/s';
+        document.getElementById('flowRateVal').textContent = '8.42 L/s';
       } else if (sel === 'well2') {
         document.getElementById('qualityIndex').innerHTML = `pH 7.1 | 1.8 NTU`;
-        document.getElementById('flowRateVal').textContent = '6.9 L/s';
+        document.getElementById('flowRateVal').textContent = '6.90 L/s';
       } else {
         document.getElementById('qualityIndex').innerHTML = `pH 7.5 | 0.9 NTU`;
-        document.getElementById('flowRateVal').textContent = '9.2 L/s';
+        document.getElementById('flowRateVal').textContent = '9.15 L/s';
       }
-      addTelemetryLog(`Switched telemetry context to ${sel.toUpperCase()}`, 'log-success');
+      addTelemetryLog(`Switched hardware telemetry channel to ${sel.toUpperCase()}`, 'CONTEXT', 'ice');
     }
 
-    // Initialize
+    window.addEventListener('resize', drawWaveform);
+
     window.onload = function() {
       drawWaveform();
-      setInterval(updateWaveform, 1500);
-      addTelemetryLog('Connected to Solar Well #001 (Alwar, Rajasthan) via NB-IoT', 'log-success');
-      addTelemetryLog('Hardware Enclave HMAC-SHA256 initialized with monotonic nonce', 'log-success');
-      addEscrowLog('Vault initialized with $10,000.00 USD community grant', 'log-success');
+      setInterval(updateWaveform, 1600);
+      addTelemetryLog('Hardware Enclave HMAC-SHA256 initialized with monotonic nonce', 'BOOT', 'ice');
+      addTelemetryLog('Connected to Solar Borehole #001 (Alwar, Rajasthan) via NB-IoT', 'CONNECT', 'emerald');
+      addEscrowLog('Vault initialized with $10,000.00 USD community donor pool', 'INITIALIZE', 'emerald');
+      addAgentLog('AGENT BOOT', 'AgentFoundry Health Governor initialized. All WHO invariants armed.', 'ice');
     };
   </script>
 </body>
