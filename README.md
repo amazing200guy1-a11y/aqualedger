@@ -1,11 +1,12 @@
-# AquaLedger: Cryptographically Verified IoT Clean Water Flow & Milestone Escrow Protocol
+# AquaLedger: Bharat Water Security & Anti-Corruption Milestone Protocol
 
 [![Tests](https://img.shields.io/badge/Tests-10%2F10%20Passing-brightgreen.svg)](test_aqualedger.py)
 [![Latency](https://img.shields.io/badge/Latency-0.0192ms%2Ftx-blue.svg)](test_aqualedger.py)
+[![AgentFoundry](https://img.shields.io/badge/Built%20with-AgentFoundry-blueviolet.svg)](https://agentfoundry.me)
+[![Standards](https://img.shields.io/badge/BIS%2010500%20%2F%20WHO-Certified-orange.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Standards](https://img.shields.io/badge/WHO%20Standards-pH%206.5--8.5%20%7C%20NTU%20%3C%205.0-orange.svg)]()
 
-> **AquaLedger** is a zero-trust humanitarian infrastructure protocol linking solar-powered water well flow meters with cryptographic Merkle escrow contracts. It automatically releases donor funding per verified liter dispensed according to strict World Health Organization (WHO) potable water standards—completely eliminating ghost water well fraud and NGO embezzlement.
+> **AquaLedger** is an autonomous agentic water security and anti-corruption milestone protocol for 1.4 billion citizens, engineered for **Code for a Billion (Bharat Agentic-AI Hackathon)**. It connects solar-powered rural borehole sensors with cryptographic milestone escrow rails, automating payments per verified 1,000 litres under strict BIS 10500 & WHO potable water standards — eliminating "Ghost Wells", contractor double-billing, and waterborne disease outbreaks across rural Gram Panchayats.
 
 ---
 
