@@ -1,0 +1,15 @@
+{
+  "name": "aqualedger",
+  "version": "1.0.0",
+  "description": "Cryptographically verified IoT water flow telemetry & milestone escrow protocol",
+  "main": "dist/telemetry_client.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": ["iot", "merkle-telemetry", "clean-water", "humanitarian-escrow"],
+  "author": "Usman Bamidele",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
