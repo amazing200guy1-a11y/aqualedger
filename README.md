@@ -34,16 +34,16 @@ flowchart TD
 1. **`IoTIngestionAgent`**: Continuously streams and ingests high-frequency LoRaWAN flow packets from rural borewells, calculating rolling averages and turbidity velocity $(\frac{d(\text{NTU})}{dt})$.
 2. **`PotabilityInvariantAgent`**: Real-time mathematical verification against Indian national drinking water standards (BIS 10500) and WHO limits (pH 6.5–8.5, Turbidity < 5.0 NTU, Flow < 15 L/s).
 3. **`EpidemiologicalForecasterAgent`**: Employs a kinetic outbreak forecasting model based on turbidity acceleration to detect monsoon pathogen blooms (*Vibrio cholerae*, *Salmonella enterica*, *E. Coli*) **before** villagers consume contaminated water.
-4. **`FinancialCircuitBreakerAgent`**: Autonomously arbitrates contractor milestone funding. In $<0.02\text{ ms}$, freezes escrow releases and triggers a physical solenoid shutoff if contamination is detected.
+4. **`FinancialCircuitBreakerAgent`**: Autonomously arbitrates contractor milestone funding. In <0.02 ms, freezes escrow releases and triggers a physical solenoid shutoff if contamination is detected.
 5. **`PanchayatDispatchAgent`**: Automatically synthesizes and dispatches an emergency repair SMS with GPS coordinates and fault diagnostics to the local *Gram Panchayat Jal Sahayak* (mechanic) in pilot districts (Alwar, Patna Rural, Nashik).
 
 ---
 
 ## ⚡ Key Technical Features
 
-- **Hardware Enclave Telemetry:** Every reading is signed with HMAC-SHA256 from a tamper-evident IoT enclave ($8 ESP32).
+- **Hardware Enclave Telemetry:** Every reading is signed with HMAC-SHA256 from a tamper-evident IoT enclave (₹670 / USD \$8 ESP32).
 - **Zero Ghost-Well Corruption:** Monotonic counters prevent contractor double-billing and forged paper inspection reports.
-- **Physical Solenoid Isolation:** Autonomous circuit-breaker halts water flow in $<0.02\text{ ms}$ upon contamination spikes.
+- **Physical Solenoid Isolation:** Autonomous circuit-breaker halts water flow in <0.02 ms upon contamination spikes.
 - **Merkle Batch Verification:** Batches sensor measurements into immutable cryptographic Merkle roots for social audits.
 - **Sub-Millisecond Verification:** Full cryptographic verification and multi-agent arbitration completes in **0.076 ms per transaction** (>13,000 tx/sec throughput).
 - **Aerospace Titanium Cockpit:** Live standalone interactive web dashboard with animated 44.1 kHz LoRaWAN waveform, milestone ledger, and active zero-trust anomaly injection sandbox.
@@ -83,7 +83,7 @@ OK
 - `test_aqualedger.py` — Formal test suite (**15/15 unit, benchmark, and multi-agent tests**).
 - `index.html` — Obsidian titanium interactive operations cockpit.
 - `SUBMISSION_DOSSIER.md` — Complete hackathon submission documentation and pitch materials.
-- `firmware/` — Deterministic C99 micro-enclave firmware for sub-$8 solar ESP32 hardware.
+- `firmware/` — Deterministic C99 micro-enclave firmware for ultra-low-cost (₹670 / USD \$8) solar ESP32 hardware.
 
 ---
 
